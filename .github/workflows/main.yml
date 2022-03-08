@@ -1,0 +1,26 @@
+name: Correcting Hangman
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2.3.1
+      
+      - name: Download the marking package
+        run: |
+          python -m pip install --upgrade pip
+          pip install aicore-hangman==0.0.1
+      - name: Verify task completion
+        run: python -m hangman_test
