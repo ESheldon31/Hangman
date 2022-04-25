@@ -7,9 +7,9 @@ class Hangman:
     def __init__(self, word_list, num_lives=5):
         self.word_list = word_list
         self.word = random.choice(self.word_list)
-        self.word_guessed = []
+        self.gapped_word = []
         for letter in range(len(self.word)):
-            self.word_guessed.append("_")
+            self.gapped_word.append("_")
         self.num_letters = len(set(self.word)) 
         self.num_lives = num_lives
         self.list_letters = []
@@ -53,8 +53,8 @@ class Hangman:
  ''']
         
         print(f'The mystery word has {self.num_letters} unique characters.')
-        print(f'{self.word_guessed}')
-        pass
+        print(f'You have {self.num_lives} lives.')
+        print(f'{self.gapped_word}')
 
     def check_letter(self, letter):
         letter = str.lower(letter)
@@ -62,20 +62,20 @@ class Hangman:
             self.num_letters -= 1
             self.list_letters.append(letter)
             idx = self.word.index(letter)
-            del self.word_guessed[idx]
-            self.word_guessed.insert(idx, letter)
+            del self.gapped_word[idx]
+            self.gapped_word.insert(idx, letter)
             try: 
                 count = idx
                 for i in range(len(self.word)):
                     idx = self.word.index(letter, count)
-                    del self.word_guessed[idx]
-                    self.word_guessed.insert(idx, letter)
+                    del self.gapped_word[idx]
+                    self.gapped_word.insert(idx, letter)
                     count += 1
             except:
                 pass
             print(f'Nice! {str.upper(letter)} is in the word!')
             time.sleep(1)
-            print(f'{self.word_guessed}')
+            print(f'{self.gapped_word}')
         else: 
             self.num_lives -= 1
             self.list_letters.append(letter)
